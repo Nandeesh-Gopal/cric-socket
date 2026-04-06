@@ -16,25 +16,21 @@ const io = new Server(server, {
   cors: { origin: "*" }
 });
 
-// Connect DB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
 
-// Create match
 app.post("/create-match", async (req, res) => {
   const match = new Match(req.body);
   await match.save();
   res.json(match);
 });
 
-// Get matches
 app.get("/matches", async (req, res) => {
   const matches = await Match.find();
   res.json(matches);
 });
 
-// Update score
 app.post("/update-score", async (req, res) => {
   const { matchId, runs, wicket } = req.body;
 
@@ -43,7 +39,6 @@ app.post("/update-score", async (req, res) => {
   match.score.runs += runs;
   if (wicket) match.score.wickets += 1;
 
-  // simple over logic
   match.score.overs += 0.1;
 
   await match.save();
