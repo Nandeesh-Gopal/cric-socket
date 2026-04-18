@@ -3,12 +3,10 @@ const { ballsToOvers, calculateRunRate } = require("../utils/cricket.utils");
 
 let io;
 
-// set socket instance
 exports.setSocket = (_io) => {
   io = _io;
 };
 
-// ✅ Create Match
 exports.createMatch = async (req, res) => {
   const { teamA, teamB, totalOvers } = req.body;
 
@@ -24,13 +22,11 @@ exports.createMatch = async (req, res) => {
   res.json(rows[0]);
 };
 
-// ✅ Get Matches
 exports.getMatches = async (req, res) => {
   const [rows] = await db.execute("SELECT * FROM matches ORDER BY id DESC");
   res.json(rows);
 };
 
-// ✅ Update Score
 exports.updateScore = async (req, res) => {
   const { id } = req.params;
   const { runs, isWicket } = req.body;
@@ -52,7 +48,6 @@ exports.updateScore = async (req, res) => {
 
   let newStatus = match.status;
 
-  // complete match if overs exceeded
   if (newBalls >= match.totalOvers * 6) {
     newStatus = "COMPLETED";
   }
@@ -74,13 +69,11 @@ exports.updateScore = async (req, res) => {
     status: newStatus,
   };
 
-  // 🔥 Socket emit (ROOM)
   io.to(id.toString()).emit("scoreUpdate", response);
 
   res.json(response);
 };
 
-// ✅ Update Status
 exports.updateStatus = async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
