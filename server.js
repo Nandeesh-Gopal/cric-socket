@@ -1,27 +1,38 @@
 const express = require("express");
 const http = require("http");
-const cors = require("cors");
 const { Server } = require("socket.io");
+const cors = require("cors");
 
-const routes = require("./routes/match.route.js");
-const socketSetup = require("./sockets/socket");
-const controller = require("./controllers/match.controller");
+const matchRoutes =
+  require("./routes/match.route");
+
+const socketHandler =
+  require("./sockets/socket");
 
 const app = express();
+
 app.use(cors());
+
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("CricLive API is running");
-});
-app.use("/api", routes);
+const server =
+  http.createServer(app);
 
-const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: "*" },
+  cors: {
+    origin: "*",
+  },
 });
-controller.setSocket(io);
-socketSetup(io);
+
+app.set("io", io);
+
+socketHandler(io);
+
+app.use("/api", matchRoutes);
+
 server.listen(5000, () => {
-  console.log("Server running on port 5000");
+
+  console.log(
+    "Server running on port 5000"
+  );
 });
