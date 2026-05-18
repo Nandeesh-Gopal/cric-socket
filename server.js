@@ -1,11 +1,12 @@
 const express = require("express");
 const http = require("http");
+// socketio works with http server
 const { Server } = require("socket.io");
+// ojbect destructuring
 const cors = require("cors");
 
-const matchRoutes =
-  require("./routes/match.route");
-
+const matchRoutes = require("./routes/match.route");
+// imports all the routes
 const socketHandler =
   require("./sockets/socket");
 
