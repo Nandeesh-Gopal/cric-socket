@@ -1,8 +1,8 @@
+console.log("Before db imported")
 const db = require("../../config/db");
+console.log("after db import")
 exports.createMatch = async (req, res) => {
-
   try {
-
     const {
       teamA,
       teamB,

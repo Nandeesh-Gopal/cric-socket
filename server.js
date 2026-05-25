@@ -1,4 +1,6 @@
+
 const express = require("express");
+// require function import the exported value like "module.export"
 const http = require("http");
 // socketio works with http server
 const { Server } = require("socket.io");
@@ -7,8 +9,7 @@ const cors = require("cors");
 
 const matchRoutes = require("./routes/match.route");
 // imports all the routes
-const socketHandler =
-  require("./sockets/socket");
+const socketHandler =require("./sockets/socket");
 
 const app = express();
 
@@ -25,6 +26,9 @@ const io = new Server(server, {
   },
 });
 
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 app.set("io", io);
 
 socketHandler(io);
