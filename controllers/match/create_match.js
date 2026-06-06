@@ -2,6 +2,7 @@ console.log("Before db imported")
 const db = require("../../config/db");
 console.log("after db import")
 exports.createMatch = async (req, res) => {
+  console.log("create match controller called");
   try {
     const {
       teamA,
@@ -9,8 +10,7 @@ exports.createMatch = async (req, res) => {
       overs,
     } = req.body;
 
-    const [result] = await db.execute(
-      `
+    const [result] = await db.execute(`
       INSERT INTO matches
       (
         teamA,
