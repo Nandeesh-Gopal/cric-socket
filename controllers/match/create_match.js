@@ -10,7 +10,8 @@ exports.createMatch = async (req, res) => {
       overs,
     } = req.body;
 
-    const [result] = await db.execute(`
+    const [result] = await db.execute(//usaly execute is used for placeholder ? (better security)
+      `
       INSERT INTO matches
       (
         teamA,

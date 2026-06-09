@@ -31,14 +31,16 @@ const pool = mysql.createPool({
 | `queueLimit`         | Max waiting requests |
 
 */
-pool.getConnection((err, connection) => {
+pool.getConnection((err, con) => {
   if (err) {
     console.error(err);
     return;
   }
   console.log("Connected to DB");
-  connection.release();
+  con.release();
 });
+
+const result = await pool.execute("SELECT * FROM matches");
 
 /*
 
