@@ -22,8 +22,8 @@ const server =
 
 const io = new Server(server, {
   cors: {
-    origin: "*",
-  },
+    origin: "*"
+  }
 });
 
 app.get("/", (req, res) => {
@@ -34,9 +34,14 @@ app.set("io", io);
 socketHandler(io);
 
 app.use("/api", matchRoutes);
+app.get("/db-check", async (req, res) => {
+  const db = require("./config/db");
+  const [data]= await db.execute("SELECT * FROM matches");
+  console.log(data);
+  res.json(data);
+})
 
 server.listen(5000, () => {
-
   console.log(
     "Server running on port 5000"
   );

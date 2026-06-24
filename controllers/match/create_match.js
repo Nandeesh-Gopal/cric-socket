@@ -42,7 +42,7 @@ exports.createMatch = async (req, res) => {
       `,
       [
         teamA,
-        teamB,
+        teamB,        
         overs,
       ]
     );

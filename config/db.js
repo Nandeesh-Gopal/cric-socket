@@ -40,7 +40,6 @@ pool.getConnection((err, con) => {
   con.release();
 });
 
-const result = await pool.execute("SELECT * FROM matches");
 
 /*
 
