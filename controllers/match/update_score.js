@@ -8,7 +8,6 @@ const {
 exports.updateScore = async (req, res) => {
 
   try {
-    res.send(req);
 
     const io = req.app.get("io");
 
